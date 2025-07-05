@@ -1,0 +1,6 @@
+@BaseProjectNetCore_HostAddress = http://localhost:5196
+
+GET {{BaseProjectNetCore_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
