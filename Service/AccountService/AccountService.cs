@@ -75,7 +75,7 @@ namespace BaseProject.Service.AccountService
                     Password = hashedPassword,
                     Fullname = requestData.Fullname,
                     Address = requestData.Address,
-                    IsAdmin = 0
+                    //IsAdmin = 0
                 };
 
                 await _accountRepository.Account_SignUp(new_account);

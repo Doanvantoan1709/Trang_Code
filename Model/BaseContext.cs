@@ -18,7 +18,7 @@ namespace Model
             : base(options)
         {
         }
-
+        public DbSet<incoming_email> incoming_email { get; set; }
         public DbSet<Account> account { get; set; }
         public DbSet<Permission> permission { get; set; }
         public DbSet<Function> function { get; set; }
@@ -37,6 +37,7 @@ namespace Model
         public DbSet<FileSecurity> FileSecurity { get; set; }
         public DbSet<EmailThongBao> EmailThongBao { get; set; }
         public DbSet<QLThongBao> QLThongBao { get; set; }
+        public DbSet<TestScaffold> TestScaffold { get; set; }
 
         // tạm ko dùng GroupRole
         //public DbSet<GroupRole> GroupRole { get; set; }
