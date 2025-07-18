@@ -37,6 +37,7 @@ namespace Model
         public DbSet<FileSecurity> FileSecurity { get; set; }
         public DbSet<EmailThongBao> EmailThongBao { get; set; }
         public DbSet<QLThongBao> QLThongBao { get; set; }
+        public DbSet<TestScaffold> TestScaffold { get; set; }
 
         // tạm ko dùng GroupRole
         //public DbSet<GroupRole> GroupRole { get; set; }
