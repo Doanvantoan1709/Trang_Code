@@ -24,8 +24,10 @@ namespace BaseProject.Api
             OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
             services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
+
             services.AddSwaggerGen(opts =>
             {
                 opts.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme()
@@ -55,12 +57,19 @@ namespace BaseProject.Api
             //services.AddSignalR();
             services.Configure<FormOptions>(options => { options.MultipartBodyLengthLimit = 1048576000; });
 
-
+            // Database
+            //services.AddDbContext<BaseProjectContext>(options =>
+            //{
+            //    var connectionString = AppSettings.Connections.PostgreSQLConnection;
+            //    options.UseNpgsql(connectionString, b => b.MigrationsAssembly("BaseProject.Model"));
+            //});
 
             services.AddDbContext<BaseProjectContext>(options =>
             {
-                var connectionString = AppSettings.Connections.PostgreSQLConnection;
-                options.UseNpgsql(connectionString, b => b.MigrationsAssembly("BaseProject.Model"));
+                var connectionString = AppSettings.Connections.MySqlConnection;
+                options.UseMySql(connectionString,
+                    Microsoft.EntityFrameworkCore.ServerVersion.AutoDetect(connectionString),
+                    b => b.MigrationsAssembly("BaseProject.Model"));
             });
 
 
@@ -70,7 +79,6 @@ namespace BaseProject.Api
             //    options.UseSqlServer(connectionString, b => b.MigrationsAssembly("BaseProject.Model"));
             //});
 
-
             services.AddSingleton<IMongoClient, MongoClient>(sp =>
             {
                 var connectionString = AppSettings.Connections.MongoDBConnection.ConnectionString;
@@ -79,35 +87,33 @@ namespace BaseProject.Api
                 return new MongoClient(settings);
             });
 
-       
-
-
             services.AddDependencyInjection();
 
             services.AddIdentity<AppUser, AppRole>()
                  .AddEntityFrameworkStores<BaseProjectContext>()
                  .AddDefaultTokenProviders();
-            services.AddAuthentication(options =>
-             {
-                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-             }).AddJwtBearer(options =>
-             {
-                 options.TokenValidationParameters = new TokenValidationParameters()
-                 {
-                     ValidateIssuer = false,
-                     ValidateAudience = false,
-                     RequireExpirationTime = true,
-                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppSettings.AuthSetting.Key)),
-                     ValidateIssuerSigningKey = true,
-                 };
-             });
+
+            //services.AddAuthentication(options =>
+            // {
+            //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            // }).AddJwtBearer(options =>
+            // {
+            //     options.TokenValidationParameters = new TokenValidationParameters()
+            //     {
+            //         ValidateIssuer = false,
+            //         ValidateAudience = false,
+            //         RequireExpirationTime = true,
+            //         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppSettings.AuthSetting.Key)),
+            //         ValidateIssuerSigningKey = true,
+            //     };
+            // });
+
             //services.AddStackExchangeRedisCache(options =>
             //{
             //    options.Configuration = AppSettings.ConnectionStrings.DistCacheConnectionString;
             //    options.InstanceName = "BaseProject_";
             //});
-
 
             services.Configure<IdentityOptions>(options =>
              {
@@ -154,7 +160,6 @@ namespace BaseProject.Api
 
         private static void AddDependencyInjection(this IServiceCollection services)
         {
-
             services.AddScoped<IMapper, Mapper>();
             services.AddScoped<DbContext, BaseProjectContext>();
             services.AddScoped<LogActionFilter>();
@@ -167,8 +172,6 @@ namespace BaseProject.Api
                 if (impl != null) services.AddScoped(intf, impl);
             }
 
-
-
             services.AddScoped(typeof(IService<>), typeof(Service<>));
             var serviceTypes = typeof(IService<>).Assembly.GetTypes()
                  .Where(x => !string.IsNullOrEmpty(x.Namespace) && x.Namespace.StartsWith("BaseProject.Service") && x.Name.EndsWith("Service"));
@@ -177,10 +180,6 @@ namespace BaseProject.Api
                 var impl = serviceTypes.FirstOrDefault(c => c.IsClass && intf.Name.Substring(1) == c.Name);
                 if (impl != null) services.AddScoped(intf, impl);
             }
-
-
-
-        
         }
     }
 

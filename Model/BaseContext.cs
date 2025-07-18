@@ -12,15 +12,16 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class BaseProjectContext : IdentityDbContext<AppUser, AppRole, Guid>
+    public class BaseProjectContext : DbContext
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public BaseProjectContext(DbContextOptions<BaseProjectContext> options,IHttpContextAccessor httpContextAccessor) : base(options)
+        public BaseProjectContext(DbContextOptions<BaseProjectContext> options)
+            : base(options)
         {
-            _httpContextAccessor = httpContextAccessor;
         }
 
+        public DbSet<Account> account { get; set; }
+        public DbSet<Permission> permission { get; set; }
+        public DbSet<Function> function { get; set; }
 
         public DbSet<Role> Role { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
@@ -30,7 +31,6 @@ namespace Model
         public DbSet<RoleOperation> RoleOperation { get; set; }
         public DbSet<Notification> Notification { get; set; }
         public DbSet<TaiLieuDinhKem> TaiLieuDinhKem { get; set; }
- 
         public DbSet<Audit> Audit { get; set; }
         public DbSet<Department> Department { get; set; }
         public DbSet<FileManager> FileManager { get; set; }
@@ -38,24 +38,18 @@ namespace Model
         public DbSet<EmailThongBao> EmailThongBao { get; set; }
         public DbSet<QLThongBao> QLThongBao { get; set; }
 
-
         // tạm ko dùng GroupRole
         //public DbSet<GroupRole> GroupRole { get; set; }
 
         // nhóm người
         public DbSet<GroupUser> GroupUser { get; set; }
-
         public DbSet<User_GroupUser> User_GroupUser { get; set; }
+
         // nhóm người - nhóm quyền
         public DbSet<GroupUserRole> GroupUserRole { get; set; }
         public DbSet<SystemLogs> SystemLogs { get; set; }
-
         public DbSet<GioiHanDiaChiMang> GioiHanDiaChiMang { get; set; }
 
         //Đơn thư
-
-
-
-   
     }
 }

@@ -79,6 +79,7 @@ namespace BaseProject.Extensions
         public string OnlineConnection { get; set; }
         public string DistCacheConnectionString { get; set; }
         public string PostgreSQLConnection { get; set; }
+        public string MySqlConnection { get; set; }
         public MongoDBConnection MongoDBConnection { get; set; }
 
     }
