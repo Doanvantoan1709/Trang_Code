@@ -12,43 +12,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:7294
-      - ConnectionStrings__MySqlConnection=server=mysql-db;port=3306;database=watchers;user=watchers;password=i7pnX466Ry7D4nMr
-    depends_on:
-      - mysql-db
-    networks:
-      - baseproject-network
+      - ConnectionStrings__MySqlConnection=server=62.146.236.71;port=3306;database=watchers;user=watchers;password=i7pnX466Ry7D4nMr
     volumes:
       - ./uploads:/app/uploads
       - ./wwwroot/uploads:/app/wwwroot/uploads
-    restart: unless-stopped
-
-  # MySQL Database
-  mysql-db:
-    image: mysql:8.0
-    container_name: baseproject-mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=i7pnX466Ry7D4nMr
-      - MYSQL_DATABASE=watchers
-      - MYSQL_USER=watchers
-      - MYSQL_PASSWORD=i7pnX466Ry7D4nMr
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-      - ./sqlbackup:/docker-entrypoint-initdb.d
-    networks:
-      - baseproject-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "watchers", "-pi7pnX466Ry7D4nMr"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
-
-networks:
-  baseproject-network:
-    driver: bridge
-
-volumes:
-  mysql-data: 
+    restart: unless-stopped 

@@ -1,9 +1,9 @@
-# Docker Compose Setup - Base Project với MySQL
+# Docker Compose Setup - Base Project với External MySQL
 
 ## Cấu hình hiện tại
-- **Database**: MySQL 8.0
-- **API**: .NET 6 trên port 7294
-- **Database Connection**: `watchers` database trên MySQL
+- **Database**: External MySQL Server (62.146.236.71:3306)
+- **API**: .NET 8 trên port 7294
+- **Database Connection**: `watchers` database trên MySQL server có sẵn
 
 ## Cấu trúc files
 - `docker-compose.yml` - Cấu hình chính
@@ -15,7 +15,7 @@
 
 ### Lần đầu khởi chạy
 ```bash
-# Build và chạy tất cả services
+# Build và chạy API service
 docker-compose up --build
 
 # Hoặc chạy ở background
@@ -24,7 +24,7 @@ docker-compose up -d --build
 
 ### Các lần sau
 ```bash
-# Khởi chạy services đã build
+# Khởi chạy API service đã build
 docker-compose up
 
 # Hoặc ở background  
@@ -37,13 +37,12 @@ docker-compose up -d
 - **URL**: http://localhost:7294
 - **Container**: baseproject-api
 
-### MySQL Database  
-- **Host**: localhost
+### External MySQL Database  
+- **Host**: 62.146.236.71
 - **Port**: 3306
 - **Database**: watchers
 - **Username**: watchers
 - **Password**: i7pnX466Ry7D4nMr
-- **Container**: baseproject-mysql
 
 ## Các lệnh hữu ích
 
