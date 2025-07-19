@@ -15,8 +15,14 @@ RUN dotnet restore "BaseProjectNetCore.sln"
     # Copy all source code
 COPY . .
     
+    # Create wwwroot/uploads directory in source before build
+RUN mkdir -p BaseProjectNetCore/wwwroot/uploads
+    
     # Build the project
 RUN dotnet publish "BaseProjectNetCore/BaseProjectNetCore.csproj" -c Release -o /app/publish
+    
+    # Ensure wwwroot/uploads exists after publish
+RUN mkdir -p /app/publish/wwwroot/uploads
     
     # -------------------------------------
     # STAGE 2: RUNTIME
@@ -27,11 +33,10 @@ WORKDIR /app
     # Copy compiled app from build stage
 COPY --from=build /app/publish .
     
-    # Create necessary directories
-RUN mkdir -p /app/wwwroot/uploads && \
-    mkdir -p /app/uploads && \
-    chmod 755 /app/wwwroot/uploads && \
-    chmod 755 /app/uploads
+    # Double-check and create upload directories
+RUN mkdir -p wwwroot/uploads uploads && \
+    chmod -R 755 wwwroot uploads && \
+    ls -la wwwroot/
     
     # Set environment variables if needed
 ENV ASPNETCORE_URLS=http://+:7294 \
