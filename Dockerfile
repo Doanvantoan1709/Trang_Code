@@ -30,11 +30,15 @@ RUN dotnet publish "BaseProjectNetCore/BaseProjectNetCore.csproj" -c Release -o 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
     
+
     # Copy compiled app from build stage
 COPY --from=build /app/publish .
     
-    # Double-check and create upload directories
-
+    # Copy entrypoint script
+COPY entrypoint.sh /app/entrypoint.sh
+    
+    # Make entrypoint script executable
+RUN chmod +x /app/entrypoint.sh
     
     # Set environment variables if needed
 ENV ASPNETCORE_URLS=http://+:7294 \
@@ -42,6 +46,6 @@ ENV ASPNETCORE_URLS=http://+:7294 \
     
     # Expose port
 EXPOSE 7294  
-    # Run the application
-ENTRYPOINT ["dotnet", "BaseProjectNetCore.dll"]
+    # Run the application via script
+ENTRYPOINT ["/app/entrypoint.sh"]
     
