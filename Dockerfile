@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
     
 # Copy solution and restore as distinct layers
@@ -21,7 +21,7 @@ RUN dotnet publish "BaseProjectNetCore/BaseProjectNetCore.csproj" -c Release -o 
     # -------------------------------------
     # STAGE 2: RUNTIME
     # -------------------------------------
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
     
     # Copy compiled app from build stage
