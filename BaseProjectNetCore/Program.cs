@@ -15,6 +15,7 @@ using MongoDB.Driver;
 using System;
 using Model;
 using Microsoft.EntityFrameworkCore;
+using BaseProject.Repository.TESTDB;
 
 internal class Program
 {
@@ -75,6 +76,7 @@ internal class Program
         // Life time
         builder.Services.AddScoped<IAccountRepository, AccountRepository>();
         builder.Services.AddScoped<IAccountService, AccountService>();
+        builder.Services.AddScoped<ITest, Test>();
 
         var app = builder.Build();
 

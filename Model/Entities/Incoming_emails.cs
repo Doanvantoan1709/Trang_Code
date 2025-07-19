@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BaseProject.Model.Entities
 {
-    public class incoming_email
+    public class Incoming_emails
     {
         [Key]
         public int id { get; set; }
@@ -22,7 +22,7 @@ namespace BaseProject.Model.Entities
         public DateTime received_time { get; set; }
         [MaxLength(50)]
         public string? category { get; set; }
-        public string? suspicious_indices { get; set; } 
+        public string? suspicious_indicators { get; set; } 
         public DateTime created_at { get; set; }
     }
 }
