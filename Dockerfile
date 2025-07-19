@@ -22,7 +22,7 @@ RUN mkdir -p BaseProjectNetCore/wwwroot/uploads
 RUN dotnet publish "BaseProjectNetCore/BaseProjectNetCore.csproj" -c Release -o /app/publish
     
     # Ensure wwwroot/uploads exists after publish
-RUN mkdir -p /app/publish/wwwroot/uploads
+
     
     # -------------------------------------
     # STAGE 2: RUNTIME
@@ -34,9 +34,7 @@ WORKDIR /app
 COPY --from=build /app/publish .
     
     # Double-check and create upload directories
-RUN mkdir -p wwwroot/uploads uploads && \
-    chmod -R 755 wwwroot uploads && \
-    ls -la wwwroot/
+
     
     # Set environment variables if needed
 ENV ASPNETCORE_URLS=http://+:7294 \
