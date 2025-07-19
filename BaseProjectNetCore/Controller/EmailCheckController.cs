@@ -51,10 +51,10 @@ namespace BaseProjectNetCore.Controller
         {
             try
             {
-
+                var res = await _emailCheckService.GetData(search);
                 return new DataResponse<PagedList<EmailCheckDto>>()
                 {
-                    Data = await _emailCheckService.GetData(search),
+                    Data = res,
                     Message = "Lấy thông tin thành công",
                     Status = true
 

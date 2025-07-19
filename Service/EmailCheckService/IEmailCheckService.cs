@@ -7,6 +7,7 @@ using BaseProject.Model.Entities;
 using BaseProject.Service.Common;
 using BaseProject.Service.EmailCheckService.Dto;
 using BaseProject.Service.EmailCheckService.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Service.Common;
 
 namespace BaseProject.Service.EmailCheckService
@@ -15,6 +16,7 @@ namespace BaseProject.Service.EmailCheckService
     {
         Task<PagedList<EmailCheckDto>> GetData(EmailCheckSearch search);
         Task<Incoming_emails> GetDto(Guid id);
+        Task<EmailCheckResponseImportExcel> ReadExcel(IFormFile fileExcel);
 
     }
 }
