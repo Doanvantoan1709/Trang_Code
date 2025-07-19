@@ -104,7 +104,7 @@ internal class Program
         //           Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "uploads")),
         //    RequestPath = "/uploads",
         //});
-        app.UseStaticFiles();
+        //app.UseStaticFiles();
 
         app.UseAuthentication();
 
