@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  baseproject-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:7294
+      - ConnectionStrings__MySqlConnection=server=mysql-db;port=3306;database=watchers;user=watchers;password=i7pnX466Ry7D4nMr
+    volumes:
+      # Mount source code for development (hot reload)
+      - ./BaseProjectNetCore:/app/BaseProjectNetCore:ro
+      # Mount upload folders
+      - ./BaseProjectNetCore/uploads:/app/uploads
+      - ./BaseProjectNetCore/wwwroot/uploads:/app/wwwroot/uploads
+
+  mysql-db:
+    environment:
+      - MYSQL_ROOT_PASSWORD=i7pnX466Ry7D4nMr
+      - MYSQL_DATABASE=watchers
+      - MYSQL_USER=watchers
+      - MYSQL_PASSWORD=i7pnX466Ry7D4nMr
+    volumes:
+      # Mount SQL backup for initial data (if you have MySQL dump files)
+      - ./sqlbackup:/docker-entrypoint-initdb.d:ro 
