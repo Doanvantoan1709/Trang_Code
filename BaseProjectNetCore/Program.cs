@@ -98,13 +98,13 @@ internal class Program
         app.UseDeveloperExceptionPage();
         //app.UseMiddleware<LoggingMiddleware>();
 
-        //app.UseStaticFiles(new StaticFileOptions
-        //{
-        //    FileProvider = new PhysicalFileProvider(
-        //           Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "uploads")),
-        //    RequestPath = "/uploads",
-        //});
-        //app.UseStaticFiles();
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(
+                   Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "uploads")),
+            RequestPath = "/uploads",
+        });
+        app.UseStaticFiles();
 
         app.UseAuthentication();
 

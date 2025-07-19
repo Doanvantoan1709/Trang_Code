@@ -1,51 +1,36 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
+# ------------ Build stage ------------
+    FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+    WORKDIR /src
     
-# Copy solution and restore as distinct layers
-COPY BaseProjectNetCore.sln ./
-COPY BaseProjectNetCore/BaseProjectNetCore.csproj BaseProjectNetCore/
-COPY CommonHelper/CommonHelper.csproj CommonHelper/
-COPY Model/BaseProject.Model.csproj Model/
-COPY Repository/BaseProject.Repository.csproj Repository/
-COPY Service/BaseProject.Service.csproj Service/
+    COPY BaseProjectNetCore.sln ./
+    COPY BaseProjectNetCore/BaseProjectNetCore.csproj BaseProjectNetCore/
+    COPY CommonHelper/CommonHelper.csproj CommonHelper/
+    COPY Model/BaseProject.Model.csproj Model/
+    COPY Repository/BaseProject.Repository.csproj Repository/
+    COPY Service/BaseProject.Service.csproj Service/
     
-    # Restore dependencies
-RUN dotnet restore "BaseProjectNetCore.sln"
+    RUN dotnet restore "BaseProjectNetCore.sln"
     
-    # Copy all source code
-COPY . .
+    COPY . .
+    RUN mkdir -p BaseProjectNetCore/wwwroot/uploads
+    RUN dotnet publish "BaseProjectNetCore/BaseProjectNetCore.csproj" -c Release -o /app/publish
     
-    # Create wwwroot/uploads directory in source before build
-RUN mkdir -p BaseProjectNetCore/wwwroot/uploads
+    # ------------ Runtime stage ------------
+    FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+    WORKDIR /app
     
-    # Build the project
-RUN dotnet publish "BaseProjectNetCore/BaseProjectNetCore.csproj" -c Release -o /app/publish
+    COPY --from=build /app/publish .
     
-    # Ensure wwwroot/uploads exists after publish
-
+    # Ensure the uploads folder exists
+    RUN mkdir -p /app/wwwroot/uploads
     
-    # -------------------------------------
-    # STAGE 2: RUNTIME
-    # -------------------------------------
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
-WORKDIR /app
+    COPY entrypoint.sh /app/entrypoint.sh
+    RUN chmod +x /app/entrypoint.sh
     
-
-    # Copy compiled app from build stage
-COPY --from=build /app/publish .
+    ENV ASPNETCORE_URLS=http://+:7294 \
+        DOTNET_RUNNING_IN_CONTAINER=true \
+        ASPNETCORE_ENVIRONMENT=Production
     
-    # Copy entrypoint script
-COPY entrypoint.sh /app/entrypoint.sh
-    
-    # Make entrypoint script executable
-RUN chmod +x /app/entrypoint.sh
-    
-    # Set environment variables if needed
-ENV ASPNETCORE_URLS=http://+:7294 \
-        DOTNET_RUNNING_IN_CONTAINER=true
-    
-    # Expose port
-EXPOSE 7294  
-    # Run the application via script
-ENTRYPOINT ["/app/entrypoint.sh"]
+    EXPOSE 7294
+    ENTRYPOINT ["/app/entrypoint.sh"]
     
