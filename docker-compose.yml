@@ -7,11 +7,8 @@ services:
     container_name: baseproject-api
     ports:
       - "7294:7294"
-      - "7295:7295"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:7294;https://+:7295
+      - ASPNETCORE_URLS=http://+:7294
       - ConnectionStrings__MySqlConnection=server=62.146.236.71;port=3306;database=watchers;user=watchers;password=i7pnX466Ry7D4nMr
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/aspnetapp.pfx
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=YourPassword123
     restart: unless-stopped 

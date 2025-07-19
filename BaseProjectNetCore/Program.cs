@@ -16,7 +16,6 @@ using System;
 using Model;
 using Microsoft.EntityFrameworkCore;
 using BaseProject.Repository.TESTDB;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 internal class Program
 {
@@ -56,16 +55,6 @@ internal class Program
         builder.Services.AddStackExchangeRedisCache(options =>
         {
             options.Configuration = configuration["RedisCacheUrl"];
-        });
-
-        // Configure Kestrel for HTTPS
-        builder.Services.Configure<KestrelServerOptions>(options =>
-        {
-            options.ListenAnyIP(7294); // HTTP
-            options.ListenAnyIP(7295, listenOptions =>
-            {
-                listenOptions.UseHttps(); // HTTPS
-            });
         });
         //builder.Services.AddControllers();
 
