@@ -27,6 +27,12 @@ WORKDIR /app
     # Copy compiled app from build stage
 COPY --from=build /app/publish .
     
+    # Create necessary directories
+RUN mkdir -p /app/wwwroot/uploads && \
+    mkdir -p /app/uploads && \
+    chmod 755 /app/wwwroot/uploads && \
+    chmod 755 /app/uploads
+    
     # Set environment variables if needed
 ENV ASPNETCORE_URLS=http://+:7294 \
         DOTNET_RUNNING_IN_CONTAINER=true
