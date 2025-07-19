@@ -13,7 +13,7 @@ using Service.Common;
 
 namespace BaseProject.Service.EmailCheckService
 {
-    public class EmailCheckService : Service<incoming_email>, IEmailCheckService
+    public class EmailCheckService : Service<Incoming_emails>, IEmailCheckService
     {
         private readonly IEmailCheckRepository _emailCheckRepository;
 
@@ -33,7 +33,7 @@ namespace BaseProject.Service.EmailCheckService
                             from_email = q.from_email,
                             id = q.id,
                             received_time = q.received_time,
-                            suspicious_indices = q.suspicious_indices,
+                            suspicious_indicators = q.suspicious_indicators,
                             title = q.title,
                             to_email = q.to_email
                         };
@@ -50,8 +50,8 @@ namespace BaseProject.Service.EmailCheckService
                     query = query.Where(x => x.content.ToLower().Contains(search.content.ToLower()));
                 if (!string.IsNullOrEmpty(search.from_email))
                     query = query.Where(x => x.from_email.ToLower().Contains(search.from_email.ToLower()));
-                if (!string.IsNullOrEmpty(search.suspicious_indices))
-                    query = query.Where(x => x.suspicious_indices.ToLower().Contains(search.suspicious_indices.ToLower()));
+                if (!string.IsNullOrEmpty(search.suspicious_indicators))
+                    query = query.Where(x => x.suspicious_indicators.ToLower().Contains(search.suspicious_indicators.ToLower()));
                 if (!string.IsNullOrEmpty(search.title))
                     query = query.Where(x => x.title.ToLower().Contains(search.title.ToLower()));
                 if (!string.IsNullOrEmpty(search.category))
@@ -65,7 +65,7 @@ namespace BaseProject.Service.EmailCheckService
 
         }
 
-        public Task<incoming_email> GetDto(Guid id)
+        public Task<Incoming_emails> GetDto(Guid id)
         {
             throw new NotImplementedException();
         }

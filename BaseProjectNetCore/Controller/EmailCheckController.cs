@@ -22,12 +22,12 @@ namespace BaseProjectNetCore.Controller
         }
 
         [HttpGet("Get/{id}")]
-        public async Task<DataResponse<incoming_email>> Get(Guid id)
+        public async Task<DataResponse<Incoming_emails>> Get(Guid id)
         {
             try
             {
                 var data = await _emailCheckService.GetByIdAsync(id);
-                return new DataResponse<incoming_email>()
+                return new DataResponse<Incoming_emails>()
                 {
                     Message = "Lấy thông tin thành công",
                     Data = data,
@@ -36,7 +36,7 @@ namespace BaseProjectNetCore.Controller
             }
             catch (Exception ex)
             {
-                return new DataResponse<incoming_email>()
+                return new DataResponse<Incoming_emails>()
                 {
                     Message = "Lỗi lấy thông tin Template",
                     Status = true,

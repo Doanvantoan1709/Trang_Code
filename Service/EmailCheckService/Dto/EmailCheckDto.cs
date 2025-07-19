@@ -7,7 +7,7 @@ using BaseProject.Model.Entities;
 
 namespace BaseProject.Service.EmailCheckService.Dto
 {
-    public class EmailCheckDto :incoming_email
+    public class EmailCheckDto :Incoming_emails
     {
     }
 }

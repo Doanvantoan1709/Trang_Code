@@ -11,10 +11,10 @@ using Service.Common;
 
 namespace BaseProject.Service.EmailCheckService
 {
-    public interface IEmailCheckService :IService<incoming_email>
+    public interface IEmailCheckService :IService<Incoming_emails>
     {
         Task<PagedList<EmailCheckDto>> GetData(EmailCheckSearch search);
-        Task<incoming_email> GetDto(Guid id);
+        Task<Incoming_emails> GetDto(Guid id);
 
     }
 }

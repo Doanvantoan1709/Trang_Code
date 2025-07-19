@@ -9,7 +9,7 @@ using Repository.Common;
 
 namespace BaseProject.Repository.EmailCheckRepository
 {
-    public class EmailCheckRepository : Repository<incoming_email>, IEmailCheckRepository
+    public class EmailCheckRepository : Repository<Incoming_emails>, IEmailCheckRepository
     {
         public EmailCheckRepository(DbContext context) : base(context)
         {

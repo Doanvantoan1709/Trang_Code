@@ -10,6 +10,7 @@ namespace BaseProject.Service.EmailCheckService.ViewModels
 {
     public class EmailCheckSearch :SearchBase
     {
+    
         public int id { get; set; }
         [MaxLength(500)]
         public string? title { get; set; }
@@ -21,7 +22,7 @@ namespace BaseProject.Service.EmailCheckService.ViewModels
         public DateTime received_time { get; set; }
         [MaxLength(50)]
         public string? category { get; set; }
-        public string? suspicious_indices { get; set; }
+        public string? suspicious_indicators { get; set; }
         public DateTime created_at { get; set; }
     }
 }

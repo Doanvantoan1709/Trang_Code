@@ -8,7 +8,7 @@ using Repository.Common;
 
 namespace BaseProject.Repository.EmailCheckRepository
 {
-    public interface IEmailCheckRepository :IRepository<incoming_email>
+    public interface IEmailCheckRepository :IRepository<Incoming_emails>
     {
 
     }
