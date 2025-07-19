@@ -18,11 +18,10 @@ namespace Model
             : base(options)
         {
         }
-        public DbSet<incoming_email> incoming_email { get; set; }
+        public DbSet<Incoming_emails> incoming_emails { get; set; }
         public DbSet<Account> account { get; set; }
         public DbSet<Permission> permission { get; set; }
         public DbSet<Function> function { get; set; }
-
         public DbSet<Role> Role { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
         public DbSet<ApiPermissions> ApiPermissions { get; set; }
