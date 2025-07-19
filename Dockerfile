@@ -27,10 +27,12 @@
     COPY entrypoint.sh /app/entrypoint.sh
     RUN chmod +x /app/entrypoint.sh
     
-    ENV ASPNETCORE_URLS=http://+:7294 \
+    ENV ASPNETCORE_URLS=http://+:7294;https://+:7295 \
         DOTNET_RUNNING_IN_CONTAINER=true \
-        ASPNETCORE_ENVIRONMENT=Production
+        ASPNETCORE_ENVIRONMENT=Production \
+        ASPNETCORE_Kestrel__Certificates__Default__Path=/app/aspnetapp.pfx \
+        ASPNETCORE_Kestrel__Certificates__Default__Password=YourPassword123
     
-    EXPOSE 7294
+    EXPOSE 7294 7295
     ENTRYPOINT ["/app/entrypoint.sh"]
     
