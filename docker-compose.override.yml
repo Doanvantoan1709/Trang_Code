@@ -5,10 +5,4 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:7294
-      - ConnectionStrings__MySqlConnection=server=62.146.236.71;port=3306;database=watchers;user=watchers;password=i7pnX466Ry7D4nMr
-    volumes:
-      # Mount source code for development (hot reload)
-      - ./BaseProjectNetCore:/app/BaseProjectNetCore:ro
-      # Mount upload folders
-      - ./BaseProjectNetCore/uploads:/app/uploads
-      - ./BaseProjectNetCore/wwwroot/uploads:/app/wwwroot/uploads 
+      - ConnectionStrings__MySqlConnection=server=62.146.236.71;port=3306;database=watchers;user=watchers;password=i7pnX466Ry7D4nMr 
